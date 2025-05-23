@@ -1,0 +1,17 @@
+kafka:
+  producer:
+    enabled: true
+  consumer:
+    enabled: false
+  custom:
+    bootstrapServers: localhost:9092
+    topic: anle-topic
+    extraProperties:
+      key.serializer: org.apache.kafka.common.serialization.StringSerializer
+      value.serializer: org.apache.kafka.common.serialization.StringSerializer
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure: DEBUG

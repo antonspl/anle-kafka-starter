@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+
+  # kafka broker for producing and consuming messages
+  kafka:
+    image: bitnami/kafka:3.7
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_ENABLE_KRAFT: "yes"
+      KAFKA_CFG_NODE_ID: 1
+      KAFKA_CFG_PROCESS_ROLES: "broker,controller"
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: "1@localhost:9093"
+      KAFKA_CFG_LISTENERS: "PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092,CONTROLLER://0.0.0.0:9093"
+      KAFKA_CFG_ADVERTISED_LISTENERS: "PLAINTEXT://localhost:9092,PLAINTEXT_HOST://kafka:29092"
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,CONTROLLER:PLAINTEXT"
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: "PLAINTEXT_HOST"
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_KRAFT_CLUSTER_ID: "kraft-cluster-1"
+
+  # script creating kafka topic anle-topic after kafka has been started
+  kafka-init:
+    image: bitnami/kafka:3.7
+    depends_on:
+      - kafka
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        for i in {1..30}; do
+          kafka-topics.sh --bootstrap-server kafka:29092 --list && break
+          echo "Waiting for Kafka to be ready..."
+          sleep 2
+        done
+
+        kafka-topics.sh --create --topic anle-topic --bootstrap-server kafka:29092 --partitions 1 --replication-factor 1
+    restart: "no"
+
+  # kafka console available on localhost:9000 for manual checking anle-topic state
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka:29092
+    depends_on:
+      - kafka
+      - kafka-init
