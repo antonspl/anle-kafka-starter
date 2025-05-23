@@ -1,2 +1,2 @@
-org.anle.kafka.starter.config.KafkaProducerAutoConfiguration
-org.anle.kafka.starter.config.KafkaConsumerAutoConfiguration
+org.anle.kafka.starter.config.KafkaProducerConfiguration
+org.anle.kafka.starter.config.KafkaConsumerConfiguration

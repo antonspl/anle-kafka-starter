@@ -1,24 +1,25 @@
 package org.anle.kafka.producer;
 
-import org.anle.kafka.starter.properties.KafkaProperties;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class KafkaMessageSender implements CommandLineRunner {
-    private final Producer<String, String> producer;
-    private final KafkaProperties kafkaProperties;
 
-    public KafkaMessageSender(Producer<String, String> producer, KafkaProperties kafkaProperties) {
+    @Value("${anle.kafka.producer.topic}")
+    private String topic;
+
+    private final Producer<String, String> producer;
+
+    public KafkaMessageSender(Producer<String, String> producer) {
         this.producer = producer;
-        this.kafkaProperties = kafkaProperties;
     }
 
     @Override
     public void run(String... args) {
-        String topic = kafkaProperties.getTopic();
         System.out.println("Sending messages to topic: " + topic);
 
         for (int i = 1; i <= 5; i++) {
