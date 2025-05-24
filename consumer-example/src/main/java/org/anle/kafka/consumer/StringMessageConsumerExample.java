@@ -1,13 +1,14 @@
-package producer;
+package org.anle.kafka.consumer;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import org.anle.kafka.starter.ifc.MessageConsumerWrapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -17,16 +18,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class MessageConsumer {
+@ConditionalOnProperty(name = "anle.kafka.consumer.value-deserializer", havingValue = "org.apache.kafka.common.serialization.StringDeserializer")
+public class StringMessageConsumerExample {
 
-    private static final Logger log = LoggerFactory.getLogger(MessageConsumer.class);
+    private static final Logger log = LoggerFactory.getLogger(StringMessageConsumerExample.class);
 
-    private final KafkaConsumer<String, String> consumer;
+    private final MessageConsumerWrapper<String> consumer;
     private final String topic;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    public MessageConsumer(KafkaConsumer<String, String> consumer,
-                           @Value("${anle.kafka.consumer.topic}") String topic) {
+    public StringMessageConsumerExample(MessageConsumerWrapper<String> consumer,
+                                        @Value("${anle.kafka.consumer.topic}") String topic) {
         this.consumer = consumer;
         this.topic = topic;
     }
@@ -51,14 +53,6 @@ public class MessageConsumer {
     @PreDestroy
     public void stop() {
         scheduler.shutdown();
-        try {
-            if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
-                scheduler.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            scheduler.shutdownNow();
-        }
         consumer.close();
     }
 }

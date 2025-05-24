@@ -2,30 +2,31 @@ package org.anle.kafka.producer;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import org.anle.kafka.starter.ifc.MessageProducerWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 @Component
-public class MessageProducer {
+@ConditionalOnProperty(name = "anle.kafka.producer.value-serializer", havingValue = "org.apache.kafka.common.serialization.StringSerializer")
+public class StringMessageProducerExample {
 
-    private static final Logger log = LoggerFactory.getLogger(MessageProducer.class);
+    private static final Logger log = LoggerFactory.getLogger(StringMessageProducerExample.class);
 
     @Value("${anle.kafka.producer.topic}")
     private String topic;
 
-    private final Producer<String, String> producer;
+    private final MessageProducerWrapper<String> producer;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    public MessageProducer(Producer<String, String> producer) {
+    public StringMessageProducerExample(MessageProducerWrapper<String> producer) {
         this.producer = producer;
     }
 
@@ -37,7 +38,7 @@ public class MessageProducer {
             try {
                 String key = "RandomNumber";
                 String value = "Number is " + ThreadLocalRandom.current().nextInt(1, 100);
-                producer.send(new ProducerRecord<>(topic, key, value));
+                producer.send(topic, key, value);
                 log.info("Sent key: {}, value: {}", key, value);
             } catch (Exception e) {
                 log.error("Error sending message to Kafka", e);
@@ -48,14 +49,6 @@ public class MessageProducer {
     @PreDestroy
     public void stop() {
         scheduler.shutdown();
-        try {
-            if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
-                scheduler.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            scheduler.shutdownNow();
-        }
         producer.close();
     }
 }

@@ -3,12 +3,21 @@ package org.anle.kafka.starter.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "anle.kafka.consumer")
-public class KafkaConsumerProperties {
+public class ConsumerProperties {
     private String bootstrapServers;
     private String groupId;
     private String keyDeserializer;
     private String valueDeserializer;
     private String enableAutoCommit;
+    private String schemaRegistryUrl;
+
+    public String getSchemaRegistryUrl() {
+        return schemaRegistryUrl;
+    }
+
+    public void setSchemaRegistryUrl(String schemaRegistryUrl) {
+        this.schemaRegistryUrl = schemaRegistryUrl;
+    }
 
     public String getOffsetReset() {
         return offsetReset;

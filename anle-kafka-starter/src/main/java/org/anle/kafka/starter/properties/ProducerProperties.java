@@ -2,14 +2,20 @@ package org.anle.kafka.starter.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @ConfigurationProperties(prefix = "anle.kafka.producer")
-public class KafkaProducerProperties {
+public class ProducerProperties {
     private String bootstrapServers;
     private String keySerializer;
     private String valueSerializer;
+    private String schemaRegistryUrl;
+
+    public String getSchemaRegistryUrl() {
+        return schemaRegistryUrl;
+    }
+
+    public void setSchemaRegistryUrl(String schemaRegistryUrl) {
+        this.schemaRegistryUrl = schemaRegistryUrl;
+    }
 
     public String getBootstrapServers() {
         return bootstrapServers;

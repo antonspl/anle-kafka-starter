@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/anle-kafka-starter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/anle-kafka-starter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/avro-models/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/avro-models/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/consumer-example/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/consumer-example/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/producer-example/src/main/java" charset="UTF-8" />

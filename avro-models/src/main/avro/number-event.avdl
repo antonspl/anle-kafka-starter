@@ -1,0 +1,7 @@
+@namespace("org.anle.kafka.avro")
+protocol NumberEvent {
+	record NumberCreated {
+		string id;
+		string value;
+	}
+}

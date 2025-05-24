@@ -1,5 +1,7 @@
 package org.anle.kafka.starter;
 
+import org.anle.kafka.starter.config.StringConsumerConfig;
+import org.anle.kafka.starter.config.StringProducerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -21,16 +23,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest(
         classes = {
-                org.anle.kafka.starter.config.KafkaProducerConfiguration.class,
-                org.anle.kafka.starter.config.KafkaConsumerConfiguration.class
+                StringProducerConfig.class,
+                StringConsumerConfig.class
         },
         properties = {
-                "anle.kafka.producer.enabled=true",
                 "anle.kafka.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
                 "anle.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer",
                 "anle.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer",
 
-                "anle.kafka.consumer.enabled=true",
                 "anle.kafka.consumer.bootstrap-servers=${spring.embedded.kafka.brokers}",
                 "anle.kafka.consumer.group-id=test-group",
                 "anle.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer",
@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 )
 @EmbeddedKafka(partitions = 1, topics = {"test-topic"}, brokerProperties = {"replication.factor=1", "min.insync.replicas=1"})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class KafkaStarterIntegrationTest {
+class KafkaStarterStringIntegrationTest {
 
     private static final String TOPIC = "test-topic";
 
@@ -61,9 +61,8 @@ class KafkaStarterIntegrationTest {
     }
 
     @BeforeAll
-    void setup() throws InterruptedException {
+    void setup() {
         consumer.subscribe(Collections.singletonList(TOPIC));
-        Thread.sleep(500);
     }
 
     @Test
