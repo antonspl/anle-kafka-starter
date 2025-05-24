@@ -10,8 +10,6 @@ public class KafkaProducerProperties {
     private String bootstrapServers;
     private String keySerializer;
     private String valueSerializer;
-    private String acks;
-    private int retries;
 
     public String getBootstrapServers() {
         return bootstrapServers;
@@ -37,19 +35,4 @@ public class KafkaProducerProperties {
         this.valueSerializer = valueSerializer;
     }
 
-    public String getAcks() {
-        return acks;
-    }
-
-    public void setAcks(String acks) {
-        this.acks = acks;
-    }
-
-    public int getRetries() {
-        return retries;
-    }
-
-    public void setRetries(int retries) {
-        this.retries = retries;
-    }
 }

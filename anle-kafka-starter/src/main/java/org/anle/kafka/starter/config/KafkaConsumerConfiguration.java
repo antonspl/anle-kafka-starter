@@ -26,7 +26,7 @@ public class KafkaConsumerConfiguration {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, consumerProps.getKeyDeserializer());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, consumerProps.getValueDeserializer());
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, consumerProps.getEnableAutoCommit());
-
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, consumerProps.getOffsetReset());
         return new KafkaConsumer<>(props);
     }
 }

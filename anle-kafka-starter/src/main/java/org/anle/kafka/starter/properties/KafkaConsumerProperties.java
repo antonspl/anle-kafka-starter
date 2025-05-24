@@ -10,6 +10,16 @@ public class KafkaConsumerProperties {
     private String valueDeserializer;
     private String enableAutoCommit;
 
+    public String getOffsetReset() {
+        return offsetReset;
+    }
+
+    public void setOffsetReset(String offsetReset) {
+        this.offsetReset = offsetReset;
+    }
+
+    private String offsetReset;
+
     public String getBootstrapServers() {
         return bootstrapServers;
     }

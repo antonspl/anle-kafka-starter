@@ -24,8 +24,6 @@ public class KafkaProducerConfiguration {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, producerProps.getBootstrapServers());
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, producerProps.getKeySerializer());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, producerProps.getValueSerializer());
-        props.put(ProducerConfig.ACKS_CONFIG, producerProps.getAcks());
-        props.put(ProducerConfig.RETRIES_CONFIG, producerProps.getRetries());
         return new KafkaProducer<>(props);
     }
 }
