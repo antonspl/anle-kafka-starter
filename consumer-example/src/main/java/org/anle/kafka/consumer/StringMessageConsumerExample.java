@@ -2,7 +2,7 @@ package org.anle.kafka.consumer;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.anle.kafka.starter.ifc.MessageConsumerWrapper;
+import org.anle.kafka.starter.ifc.MessageConsumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.slf4j.Logger;
@@ -23,11 +23,11 @@ public class StringMessageConsumerExample {
 
     private static final Logger log = LoggerFactory.getLogger(StringMessageConsumerExample.class);
 
-    private final MessageConsumerWrapper<String> consumer;
+    private final MessageConsumer<String> consumer;
     private final String topic;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    public StringMessageConsumerExample(MessageConsumerWrapper<String> consumer,
+    public StringMessageConsumerExample(MessageConsumer<String> consumer,
                                         @Value("${anle.kafka.consumer.topic}") String topic) {
         this.consumer = consumer;
         this.topic = topic;

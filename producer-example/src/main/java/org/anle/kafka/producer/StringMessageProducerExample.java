@@ -2,7 +2,7 @@ package org.anle.kafka.producer;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.anle.kafka.starter.ifc.MessageProducerWrapper;
+import org.anle.kafka.starter.ifc.MessageProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,10 +23,10 @@ public class StringMessageProducerExample {
     @Value("${anle.kafka.producer.topic}")
     private String topic;
 
-    private final MessageProducerWrapper<String> producer;
+    private final MessageProducer<String> producer;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    public StringMessageProducerExample(MessageProducerWrapper<String> producer) {
+    public StringMessageProducerExample(MessageProducer<String> producer) {
         this.producer = producer;
     }
 

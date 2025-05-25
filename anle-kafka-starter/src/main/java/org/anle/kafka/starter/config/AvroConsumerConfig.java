@@ -1,7 +1,7 @@
 package org.anle.kafka.starter.config;
 
 import org.anle.kafka.avro.NumberCreated;
-import org.anle.kafka.starter.ifc.MessageConsumerWrapper;
+import org.anle.kafka.starter.ifc.MessageConsumer;
 import org.anle.kafka.starter.impl.AvroMessageConsumer;
 import org.anle.kafka.starter.properties.ConsumerProperties;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -17,7 +17,7 @@ import java.util.Properties;
 @AutoConfiguration
 @ConditionalOnProperty(name = "anle.kafka.consumer.value-deserializer", havingValue = "io.confluent.kafka.serializers.KafkaAvroDeserializer")
 @EnableConfigurationProperties(ConsumerProperties.class)
-@ConditionalOnMissingBean(MessageConsumerWrapper.class)
+@ConditionalOnMissingBean(MessageConsumer.class)
 public class AvroConsumerConfig {
 
     @Bean(destroyMethod = "close")
@@ -35,7 +35,7 @@ public class AvroConsumerConfig {
     }
 
     @Bean
-    public MessageConsumerWrapper<NumberCreated> consumer(KafkaConsumer<String, NumberCreated> kafkaConsumer) {
+    public MessageConsumer<NumberCreated> consumer(KafkaConsumer<String, NumberCreated> kafkaConsumer) {
         return new AvroMessageConsumer(kafkaConsumer);
     }
 }

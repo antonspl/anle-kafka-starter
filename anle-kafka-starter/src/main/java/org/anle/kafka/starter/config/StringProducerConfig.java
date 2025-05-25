@@ -1,6 +1,6 @@
 package org.anle.kafka.starter.config;
 
-import org.anle.kafka.starter.ifc.MessageProducerWrapper;
+import org.anle.kafka.starter.ifc.MessageProducer;
 import org.anle.kafka.starter.impl.StringMessageProducer;
 import org.anle.kafka.starter.properties.ProducerProperties;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -16,7 +16,7 @@ import java.util.Properties;
 @AutoConfiguration
 @ConditionalOnProperty(name = "anle.kafka.producer.value-serializer", havingValue = "org.apache.kafka.common.serialization.StringSerializer")
 @EnableConfigurationProperties(ProducerProperties.class)
-@ConditionalOnMissingBean(MessageProducerWrapper.class)
+@ConditionalOnMissingBean(MessageProducer.class)
 public class StringProducerConfig {
 
     @Bean(destroyMethod = "close")
@@ -29,7 +29,7 @@ public class StringProducerConfig {
     }
 
     @Bean
-    public MessageProducerWrapper<String> producer(KafkaProducer<String, String> producer) {
+    public MessageProducer<String> producer(KafkaProducer<String, String> producer) {
         return new StringMessageProducer(producer);
     }
 }

@@ -3,7 +3,7 @@ package org.anle.kafka.consumer;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.anle.kafka.avro.NumberCreated;
-import org.anle.kafka.starter.ifc.MessageConsumerWrapper;
+import org.anle.kafka.starter.ifc.MessageConsumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.slf4j.Logger;
@@ -22,11 +22,11 @@ public class AvroMessageConsumerExample {
 
     private static final Logger log = LoggerFactory.getLogger(AvroMessageConsumerExample.class);
 
-    private final MessageConsumerWrapper<NumberCreated> consumer;
+    private final MessageConsumer<NumberCreated> consumer;
     private final String topic;
 
     public AvroMessageConsumerExample(
-            MessageConsumerWrapper<NumberCreated> consumer,
+            MessageConsumer<NumberCreated> consumer,
             @Value("${anle.kafka.consumer.topic}") String topic
     ) {
         this.consumer = consumer;

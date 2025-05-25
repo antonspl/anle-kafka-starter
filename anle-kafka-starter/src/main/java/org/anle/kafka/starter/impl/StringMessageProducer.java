@@ -1,10 +1,10 @@
 package org.anle.kafka.starter.impl;
 
-import org.anle.kafka.starter.ifc.MessageProducerWrapper;
+import org.anle.kafka.starter.ifc.MessageProducer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-public class StringMessageProducer implements MessageProducerWrapper<String> {
+public class StringMessageProducer implements MessageProducer<String> {
 
     private final KafkaProducer<String, String> producer;
 

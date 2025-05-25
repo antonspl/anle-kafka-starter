@@ -1,13 +1,13 @@
 package org.anle.kafka.starter.impl;
 
-import org.anle.kafka.starter.ifc.MessageConsumerWrapper;
+import org.anle.kafka.starter.ifc.MessageConsumer;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 
 import java.time.Duration;
 import java.util.Collection;
 
-public class StringMessageConsumer implements MessageConsumerWrapper<String> {
+public class StringMessageConsumer implements MessageConsumer<String> {
 
     private final Consumer<String, String> consumer;
 

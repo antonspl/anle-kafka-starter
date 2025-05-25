@@ -1,6 +1,6 @@
 package org.anle.kafka.starter.config;
 
-import org.anle.kafka.starter.ifc.MessageConsumerWrapper;
+import org.anle.kafka.starter.ifc.MessageConsumer;
 import org.anle.kafka.starter.impl.StringMessageConsumer;
 import org.anle.kafka.starter.properties.ConsumerProperties;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -16,7 +16,7 @@ import java.util.Properties;
 @AutoConfiguration
 @ConditionalOnProperty(name = "anle.kafka.consumer.value-deserializer", havingValue = "org.apache.kafka.common.serialization.StringDeserializer")
 @EnableConfigurationProperties(ConsumerProperties.class)
-@ConditionalOnMissingBean(MessageConsumerWrapper.class)
+@ConditionalOnMissingBean(MessageConsumer.class)
 public class StringConsumerConfig {
 
     @Bean(destroyMethod = "close")
@@ -32,7 +32,7 @@ public class StringConsumerConfig {
     }
 
     @Bean
-    public MessageConsumerWrapper<String> consumer(KafkaConsumer<String, String> kafkaConsumer) {
+    public MessageConsumer<String> consumer(KafkaConsumer<String, String> kafkaConsumer) {
         return new StringMessageConsumer(kafkaConsumer);
     }
 }

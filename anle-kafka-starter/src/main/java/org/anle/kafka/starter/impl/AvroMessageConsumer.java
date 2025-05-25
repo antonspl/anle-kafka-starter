@@ -1,14 +1,14 @@
 package org.anle.kafka.starter.impl;
 
 import org.anle.kafka.avro.NumberCreated;
-import org.anle.kafka.starter.ifc.MessageConsumerWrapper;
+import org.anle.kafka.starter.ifc.MessageConsumer;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 
 import java.time.Duration;
 import java.util.Collection;
 
-public class AvroMessageConsumer implements MessageConsumerWrapper<NumberCreated> {
+public class AvroMessageConsumer implements MessageConsumer<NumberCreated> {
 
     private final Consumer<String, NumberCreated> consumer;
 

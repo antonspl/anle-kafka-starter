@@ -2,7 +2,7 @@ package org.anle.kafka.producer;
 
 import jakarta.annotation.PreDestroy;
 import org.anle.kafka.avro.NumberCreated;
-import org.anle.kafka.starter.ifc.MessageProducerWrapper;
+import org.anle.kafka.starter.ifc.MessageProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,11 +20,11 @@ public class AvroMessageProducerExample {
     private static final Logger log = LoggerFactory.getLogger(AvroMessageProducerExample.class);
     private static final String NUMBER_CREATED = "NUMBER_CREATED_KEY";
 
-    private final MessageProducerWrapper<NumberCreated> producer;
+    private final MessageProducer<NumberCreated> producer;
     private final String topic;
 
     public AvroMessageProducerExample(
-            MessageProducerWrapper<NumberCreated> producer,
+            MessageProducer<NumberCreated> producer,
             @Value("${anle.kafka.producer.topic}") String topic
     ) {
         this.producer = producer;

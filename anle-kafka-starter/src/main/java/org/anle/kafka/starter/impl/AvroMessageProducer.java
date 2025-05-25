@@ -1,11 +1,11 @@
 package org.anle.kafka.starter.impl;
 
 import org.anle.kafka.avro.NumberCreated;
-import org.anle.kafka.starter.ifc.MessageProducerWrapper;
+import org.anle.kafka.starter.ifc.MessageProducer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-public class AvroMessageProducer implements MessageProducerWrapper<NumberCreated> {
+public class AvroMessageProducer implements MessageProducer<NumberCreated> {
 
     private final KafkaProducer<String, NumberCreated> producer;
 
